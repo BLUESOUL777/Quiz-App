@@ -133,7 +133,7 @@ function showScore() {
     nextButton.innerHTML = "Restart Quiz";
     nextButton.style.display = "block";
     nextButton.addEventListener("click",() =>{
-        window.location.href = "quiz.html"
+        window.location.href = "index.html"
     })
 }
 
