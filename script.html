@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Ask AI</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+		<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>    
+.floating-bg img {
+    position: absolute;
+    width: 100px;
+    opacity: 0.6;
+    animation: floatAnimation 15s infinite linear;
+}
+
+@keyframes floatAnimation {
+    0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-10vh) translateX(30px);
+        opacity: 0;
+    }
+}
+.img1 { left: 10%; ;  animation-duration: 12s; }
+.img2 { left: 30%; animation-duration: 18s; }
+.img3 { left: 50%; animation-duration: 15s; }
+.img4 { left: 70%; animation-duration: 10s; }
+.img5 { left: 90%; animation-duration: 20s; }
+			#response {
+				margin-top: 20px;
+				padding: 10px;
+				min-height: 50px;
+			}
+			#response h3 {
+				color: #333;
+				font-size: 1.2em;
+			}
+			#response strong {
+				color: #d9534f;
+			}
+			#response ul {
+				padding-left: 20px;
+			}
+			#response li {
+				margin-bottom: 5px;
+			}
+		</style>
+	</head>
+	<body style="background-color: #0378AE;">
+        
+        <div class="floating-bg">
+            <img src="./img/undraw_analyze_0hyg.svg" class="img1">
+            <img src="./img/undraw_exams_d2tf.svg" class="img2">
+            <img src="./img/undraw_questions_g2px.svg" class="img3">
+            <img src="./img/undraw_quiz_zvhe.svg" class="img4">
+            <img src="./img/undraw_reading_c1xl.svg" class="img5">
+        </div>
+		<div class="container">
+			<h2 style="color: white; margin-top: 20px; margin-bottom: 20px;">Clear Your Doubts Here</h2>
+			<div class="form-group">
+				<input
+					type="text"
+					class="form-control"
+					id="userInput"
+					placeholder="Enter your question" />
+			</div>
+			<button class="btn" style="background-color: white;" onclick="sendMessage()">Ask!</button>
+            <button class="btn" style="background-color: white;" onclick="window.location.href='index.html'">Home</button>
+			<div id="response"></div>
+		</div>
+		<script>
+			async function sendMessage() {
+				const input = document.getElementById('userInput').value;
+				const responseDiv = document.getElementById('response');
+				if (!input) {
+					responseDiv.innerHTML = 'Please enter a message.';
+					return;
+				}
+
+				responseDiv.innerHTML = 'Loading...';
+                responseDiv.style = "color:white"
+				try {
+					const response = await fetch(
+						'https://openrouter.ai/api/v1/chat/completions',
+						{
+							method: 'POST',
+							headers: {
+								Authorization: 'Bearer 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',
+								'HTTP-Referer': 'https://quiz-app-lake-eight.vercel.app/',
+								'X-Title': 'SiteName',
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({
+								model: 'deepseek/deepseek-r1:free',
+								messages: [{ role: 'user', content: input }],
+							}),
+						},
+					);
+					const data = await response.json();
+					console.log(data);
+					const markdownText =
+						data.choices?.[0]?.message?.content || 'No response received.';
+					responseDiv.innerHTML = marked.parse(markdownText);
+				} catch (error) {
+					responseDiv.innerHTML = 'Error: ' + error.message;
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -70,6 +70,7 @@ function startQuiz() {
     currentQuestionIndex = 0;
     score = 0;
     nextButton.innerHTML = "Next";
+    nextButton.style.display = "none";
     showQuestion();
 }
 
@@ -82,11 +83,13 @@ function showQuestion() {
     currentQuestion.answers.forEach(answer => {
         const button = document.createElement("button");
         button.innerHTML = answer.text;
-        button.classList.add("btn");
+        button.classList.add("btn", "btn-outline-primary");
         answerButtons.appendChild(button);
+
         if (answer.correct) {
             button.dataset.correct = answer.correct;
         }
+
         button.addEventListener("click", selectAnswer);
     });
 }
@@ -98,9 +101,11 @@ function resetState() {
     }
 }
 
+
 function selectAnswer(e) {
     const selectedBtn = e.target;
     const isCorrect = selectedBtn.dataset.correct === "true";
+
     if (isCorrect) {
         selectedBtn.classList.add("correct");
         score++;
@@ -109,10 +114,10 @@ function selectAnswer(e) {
     }
 
     Array.from(answerButtons.children).forEach(button => {
+        button.disabled = true;
         if (button.dataset.correct === "true") {
             button.classList.add("correct");
         }
-        button.disabled = true;
     });
 
     nextButton.style.display = "block";
@@ -132,10 +137,10 @@ function showScore() {
     questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
     nextButton.innerHTML = "Restart Quiz";
     nextButton.style.display = "block";
-    nextButton.addEventListener("click",() =>{
-        window.location.href = "index.html"
-    })
-}
 
+    nextButton.onclick = () => {
+        startQuiz(); 
+    };
+}
 
 startQuiz();

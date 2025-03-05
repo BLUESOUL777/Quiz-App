@@ -1,0 +1,24 @@
+{
+  "name": "quiz-app",
+  "version": "1.0.0",
+  "main": "quiz.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BLUESOUL777/Quiz-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BLUESOUL777/Quiz-App/issues"
+  },
+  "homepage": "https://github.com/BLUESOUL777/Quiz-App#readme",
+  "description": "",
+  "dependencies": {
+    "@huggingface/inference": "^3.5.1",
+    "dotenv": "^16.4.7"
+  }
+}
