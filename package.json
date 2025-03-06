@@ -19,6 +19,7 @@
   "description": "",
   "dependencies": {
     "@huggingface/inference": "^3.5.1",
+    "@huggingface/tasks": "^0.17.1",
     "dotenv": "^16.4.7"
   }
 }
